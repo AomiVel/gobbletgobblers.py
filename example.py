@@ -1,4 +1,4 @@
-from main import GobbletGobblers
+from gobbletgobblers import GobbletGobblers
 gobb = GobbletGobblers('佐藤', '田中', '  ')
 
 print(f'先攻: {gobb.sen.player} ({gobb.sen.color})\n後攻: {gobb.kou.player} ({gobb.kou.color})')
