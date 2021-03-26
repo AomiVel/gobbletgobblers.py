@@ -17,6 +17,7 @@ _win_lines = {
     "slash": ['a3', 'b2', 'c1']
 }
 
+
 # GobbletGobblers('佐藤', '田中', 'red', '  ')
 class GobbletGobblers:
     def __init__(self, senkou_player, koukou_player, empty_board_text):
@@ -100,7 +101,6 @@ class GobbletGobblers:
                 self.winner = self.now_player
                 return
 
-
     def _powerful(self, place):
         gobbs = list(dict.fromkeys(self.now_player.gobbs))
         board_place = self.board[place]
@@ -127,16 +127,16 @@ class GobbletGobblers:
             return gobbs
 
     def choices_put(self):
-        not_big_places = [key for key in self.board.keys() if self.board[key]['b'] == None]
-        a1 = None if not 'a1' in not_big_places else self._powerful('a1')
-        a2 = None if not 'a2' in not_big_places else self._powerful('a2')
-        a3 = None if not 'a3' in not_big_places else self._powerful('a3')
-        b1 = None if not 'b1' in not_big_places else self._powerful('b1')
-        b2 = None if not 'b2' in not_big_places else self._powerful('b2')
-        b3 = None if not 'b3' in not_big_places else self._powerful('b3')
-        c1 = None if not 'c1' in not_big_places else self._powerful('c1')
-        c2 = None if not 'c2' in not_big_places else self._powerful('c2')
-        c3 = None if not 'c3' in not_big_places else self._powerful('c3')
+        not_big_places = [key for key in self.board.keys() if self.board[key]['b'] is None]
+        a1 = None if 'a1' not in not_big_places else self._powerful('a1')
+        a2 = None if 'a2' not in not_big_places else self._powerful('a2')
+        a3 = None if 'a3' not in not_big_places else self._powerful('a3')
+        b1 = None if 'b1' not in not_big_places else self._powerful('b1')
+        b2 = None if 'b2' not in not_big_places else self._powerful('b2')
+        b3 = None if 'b3' not in not_big_places else self._powerful('b3')
+        c1 = None if 'c1' not in not_big_places else self._powerful('c1')
+        c2 = None if 'c2' not in not_big_places else self._powerful('c2')
+        c3 = None if 'c3' not in not_big_places else self._powerful('c3')
 
         r = {
             "a1": a1,
@@ -163,35 +163,32 @@ class GobbletGobblers:
             self.kou = self.now_player
 
         players_gobbs = [key for key in self.board.keys() if self.board[key]['t'].startswith('b')]
-        if len(players_gobbs) > 0 and not 'm' in self.kou.modes:
+        if len(players_gobbs) > 0 and 'm' not in self.kou.modes:
             self.kou.modes.append('m')
         elif len(players_gobbs) == 0 and 'm' in self.kou.modes:
             self.kou.modes.remove('m')
 
         players_gobbs = [key for key in self.board.keys() if self.board[key]['t'].startswith('r')]
-        if len(players_gobbs) > 0 and not 'm' in self.sen.modes:
+        if len(players_gobbs) > 0 and 'm' not in self.sen.modes:
             self.sen.modes.append('m')
         elif len(players_gobbs) == 0 and 'm' in self.sen.modes:
             self.sen.modes.remove('m')
 
         self.now_player = self.kou if self.now_player.scolor == 'r' else self.sen
 
-
-
-        self.turn += 1
-
-
+        if not self.won:
+            self.turn += 1
 
     def choices_move_from(self):
         players_gobbs = [key for key in self.board.keys() if self.board[key]['t'].startswith(self.now_player.scolor)]
         return players_gobbs
 
     def choices_move_to(self, from_):
-        not_big_places = [key for key in self.board.keys() if self.board[key]['b'] == None]
+        not_big_places = [key for key in self.board.keys() if self.board[key]['b'] is None]
         if self.board[from_]['t'].endswith('s'):
             return [key for key in not_big_places if self.board[key]['t'] == self.empty_board_text]
         elif self.board[from_]['t'].endswith('m'):
-            return [key for key in not_big_places if self.board[key]['m'] == None and self.board[key]['b'] == None]
+            return [key for key in not_big_places if self.board[key]['m'] is None and self.board[key]['b'] is None]
         elif self.board[from_]['t'].endswith('b'):
             return not_big_places
 
@@ -204,14 +201,14 @@ class GobbletGobblers:
             self.board[to]['t'] = move_gobb
         elif move_gobb.endswith('m'):
             self.board[from_]['m'] = None
-            self.board[from_]['t'] = self.board[from_]['s'] + 's' if not self.board[from_]['s'] == None else self.empty_board_text
+            self.board[from_]['t'] = self.board[from_]['s'] + 's' if not self.board[from_]['s'] is None else self.empty_board_text
             self.board[to]['m'] = move_gobb[0]
             self.board[to]['t'] = move_gobb
         elif move_gobb.endswith('b'):
             self.board[from_]['b'] = None
-            if not self.board[from_]['m'] == None:
+            if not self.board[from_]['m'] is None:
                 self.board[from_]['t'] = self.board[from_]['m'] + 'm'
-            elif not self.board[from_]['s'] == None:
+            elif not self.board[from_]['s'] is None:
                 self.board[from_]['t'] = self.board[from_]['s'] + 's'
             else:
                 self.board[from_]['t'] = self.empty_board_text
@@ -225,15 +222,18 @@ class GobbletGobblers:
             self.kou = self.now_player
 
         players_gobbs = [key for key in self.board.keys() if self.board[key]['t'].startswith('b')]
-        if len(players_gobbs) > 0 and not 'm' in self.kou.modes:
+        if len(players_gobbs) > 0 and 'm' not in self.kou.modes:
             self.kou.modes.append('m')
         elif len(players_gobbs) == 0 and 'm' in self.kou.modes:
             self.kou.modes.remove('m')
 
         players_gobbs = [key for key in self.board.keys() if self.board[key]['t'].startswith('r')]
-        if len(players_gobbs) > 0 and not 'm' in self.sen.modes:
+        if len(players_gobbs) > 0 and 'm' not in self.sen.modes:
             self.sen.modes.append('m')
         elif len(players_gobbs) == 0 and 'm' in self.sen.modes:
             self.sen.modes.remove('m')
 
         self.now_player = self.kou if self.now_player.scolor == 'r' else self.sen
+
+        if not self.won:
+            self.turn += 1
