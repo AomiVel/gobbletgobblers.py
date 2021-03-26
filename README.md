@@ -1,3 +1,5 @@
+バグ、不具合報告等は[GitHub](https://github.com/Req-kun/gobbletgobblers.py)にてissueを開いてください
+
 # install
 
 ```
@@ -81,7 +83,7 @@ gobb.board
 +----+----+----+  
 t - top その座標におけるもっとも大きいゴブレット  
 b - big 一番大きいゴブレット  
-m - medium 普通サイズのゴブレット  
+m - meddle 普通サイズのゴブレット  
 s - small 一番小さいゴブレット
 
 ### gobb.choices_put
