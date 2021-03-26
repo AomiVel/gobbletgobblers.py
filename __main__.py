@@ -204,7 +204,7 @@ class GobbletGobblers:
             self.board[to]['t'] = move_gobb
         elif move_gobb.endswith('m'):
             self.board[from_]['m'] = None
-            self.board[from_]['t'] = self.board[from_]['s'] + 's' if not board[from_]['s'] == None else self.empty_board_text
+            self.board[from_]['t'] = self.board[from_]['s'] + 's' if not self.board[from_]['s'] == None else self.empty_board_text
             self.board[to]['m'] = move_gobb[0]
             self.board[to]['t'] = move_gobb
         elif move_gobb.endswith('b'):
