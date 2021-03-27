@@ -21,6 +21,15 @@
 ### 1.1.2
 ・READMEのミスを修正
 
+## 1.2.~
+
+### 1.2.0
+・gobb.winnerにwin_lineを追加
+・READMEを一部編集
+
+### 1.2.1
+・READMEのミスを修正
+
 # install
 
 ```
@@ -60,14 +69,29 @@ Create Gameの手順で設定された文字列
 
 ### gobb.now_player
 現在のプレイヤー  
-Attributesはgobb.sen, gobb.kouと同じ
+
+#### Attributes
+
+> player - Create Gameの手順で設定されたプレイヤー情報  
+gobbs - プレイヤーの所持している(新たに盤面に設置可能な)ゴブレット  
+color - プレイヤーの色(Red / Blue)  
+scolor - プレイヤーの色の略版(r / b) 基本的に内部でのみ使用  
+modes - プレイヤーが選択できるモード(初期: ['p'])
 
 ### gobb.won
 勝者が出たかどうか
 
 ### gobb.winner
 勝者  
-Attributesはgobb.sen, gobb.kou, gobb.now_playerと同じ
+
+#### Attributes
+
+> player - Create Gameの手順で設定されたプレイヤー情報  
+gobbs - プレイヤーの所持している(新たに盤面に設置可能な)ゴブレット  
+color - プレイヤーの色(Red / Blue)  
+scolor - プレイヤーの色の略版(r / b) 基本的に内部でのみ使用  
+modes - プレイヤーが選択できるモード(初期: ['p'])  
+wine_line - 勝利ライン
 
 ### gobb.board
 盤面情報
