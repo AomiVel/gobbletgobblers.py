@@ -1,4 +1,4 @@
-class Player:
+class _player:
     def __init__(self, player, gobbs, color, scolor, modes):
         self.player = player
         self.gobbs = gobbs
@@ -6,6 +6,7 @@ class Player:
         self.scolor = scolor
         self.modes = modes
 
+    
 _win_lines = {
     "a": ['a1', 'a2', 'a3'],
     "b": ['b1', 'b2', 'b3'],
@@ -23,8 +24,8 @@ class GobbletGobblers:
     def __init__(self, senkou_player, koukou_player, empty_board_text):
 
         self.empty_board_text = str(empty_board_text)
-        self.sen = Player(senkou_player, list('ssmmbb'), 'Red', 'r', ['p'])
-        self.kou = Player(koukou_player, list('ssmmbb'), 'Blue', 'b', ['p'])
+        self.sen = _player(senkou_player, list('ssmmbb'), 'Red', 'r', ['p'])
+        self.kou = _player(koukou_player, list('ssmmbb'), 'Blue', 'b', ['p'])
 
         self.turn = 1
 
@@ -94,10 +95,12 @@ class GobbletGobblers:
         for key in _win_lines.keys():
             if all([self.board[_key]['t'].startswith('b') for _key in _win_lines[key]]):
                 self.won = True
+                self.now_player.win_line = key
                 self.winner = self.now_player
                 return
             if all([self.board[_key]['t'].startswith('r') for _key in _win_lines[key]]):
                 self.won = True
+                self.now_player.win_line = key
                 self.winner = self.now_player
                 return
 
