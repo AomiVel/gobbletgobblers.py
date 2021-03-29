@@ -95,13 +95,13 @@ class GobbletGobblers:
         for key in _win_lines.keys():
             if all([self.board[_key]['t'].startswith('b') for _key in _win_lines[key]]):
                 self.won = True
-                self.now_player.win_line = key
-                self.winner = self.now_player
+                self.kou.win_line = key
+                self.winner = self.kou
                 return
             if all([self.board[_key]['t'].startswith('r') for _key in _win_lines[key]]):
                 self.won = True
-                self.now_player.win_line = key
-                self.winner = self.now_player
+                self.sen.win_line = key
+                self.winner = self.sen
                 return
 
     def _powerful(self, place):
@@ -200,13 +200,15 @@ class GobbletGobblers:
         if move_gobb.endswith('s'):
             self.board[from_]['s'] = None
             self.board[from_]['t'] = self.empty_board_text
-            self.board[to]['s'] = move_gobb[0]
-            self.board[to]['t'] = move_gobb
+            
+            self._win_check()
+            
         elif move_gobb.endswith('m'):
             self.board[from_]['m'] = None
             self.board[from_]['t'] = self.board[from_]['s'] + 's' if not self.board[from_]['s'] is None else self.empty_board_text
-            self.board[to]['m'] = move_gobb[0]
-            self.board[to]['t'] = move_gobb
+            
+            self._win_check()
+            
         elif move_gobb.endswith('b'):
             self.board[from_]['b'] = None
             if not self.board[from_]['m'] is None:
@@ -215,10 +217,14 @@ class GobbletGobblers:
                 self.board[from_]['t'] = self.board[from_]['s'] + 's'
             else:
                 self.board[from_]['t'] = self.empty_board_text
-
-            self.board[to]['b'] = move_gobb[0]
-            self.board[to]['t'] = move_gobb
-        self._win_check()
+                
+            self._win_check()
+            
+        self.board[to]['b'] = move_gobb[0]
+        self.board[to]['t'] = move_gobb
+        if not self.won:
+            self._win_check()
+            
         if self.now_player.scolor == 'r':
             self.sen = self.now_player
         else:
